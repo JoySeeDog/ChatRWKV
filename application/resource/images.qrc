@@ -1,0 +1,16 @@
+<RCC>
+    <qresource>
+        <file>number_input_down_disable.png</file>
+        <file>number_input_down_disable@2x.png</file>
+        <file>number_input_down_light.png</file>
+        <file>number_input_down_light@2x.png</file>
+        <file>number_input_down_normal.png</file>
+        <file>number_input_down_normal@2x.png</file>
+        <file>number_input_up_disable.png</file>
+        <file>number_input_up_disable@2x.png</file>
+        <file>number_input_up_light.png</file>
+        <file>number_input_up_light@2x.png</file>
+        <file>number_input_up_normal.png</file>
+        <file>number_input_up_normal@2x.png</file>
+    </qresource>
+</RCC>
