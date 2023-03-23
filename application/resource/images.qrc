@@ -1,5 +1,5 @@
 <RCC>
-    <qresource>
+    <qresource prefix="/">
         <file>number_input_down_disable.png</file>
         <file>number_input_down_disable@2x.png</file>
         <file>number_input_down_light.png</file>
@@ -12,5 +12,7 @@
         <file>number_input_up_light@2x.png</file>
         <file>number_input_up_normal.png</file>
         <file>number_input_up_normal@2x.png</file>
+        <file>rwkv_profile.png</file>
+        <file>profile_user_gray.png</file>
     </qresource>
 </RCC>

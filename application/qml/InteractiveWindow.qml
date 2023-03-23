@@ -10,7 +10,7 @@ Rectangle{
     color: "white"
 
     Component.onCompleted: {
-        paramAreaLoader.sourceComponent = writting
+        paramAreaLoader.sourceComponent = chat
     }
 
     Loader {

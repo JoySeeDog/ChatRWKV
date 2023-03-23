@@ -13,5 +13,9 @@
         <file>NumberInput.qml</file>
         <file>InteractiveWindow.qml</file>
         <file>Chat.qml</file>
+        <file>ChatItemBase.qml</file>
+        <file>ChatItemText.qml</file>
+        <file>ChatLable.qml</file>
+        <file>ChatList.qml</file>
     </qresource>
 </RCC>

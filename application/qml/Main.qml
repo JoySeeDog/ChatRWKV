@@ -32,6 +32,8 @@ Window {
             anchors.horizontalCenter: parent.horizontalCenter
             onSigClickButton: {
                 console.log("Clicked button")
+                interactive.mySlot("Hello from QML")
+                interactive.clearModel()
             }
         }
 

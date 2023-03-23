@@ -21,8 +21,7 @@ Rectangle {
     property int iconHeight: 0
     property int iconAndTextSpacing: 2
     property string textColor: getTextColor(bPressed, bHovered, bEnable)
-    property real textSize: style.textSize === undefined ? defaultStyle.textSize : style.textSize
-    property string textFontWidght: style.textFontWeight === undefined ? defaultStyle.textFontWeight : style.textFontWeight
+    property real textSize: 14
     property alias propagateComposedEvents: rootMouseArea.propagateComposedEvents
     signal sigClicked
 
@@ -53,7 +52,6 @@ Rectangle {
         }
 
         text: comButton.text
-        font.weight: textFontWidght
         textSize: comButton.textSize
         elide: Text.ElideNone
         color: textColor

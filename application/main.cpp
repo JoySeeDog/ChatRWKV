@@ -1,15 +1,24 @@
 #include <QApplication>
-#include "source/chatmainwindow.h"
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include "source/InteractiveMainWindow.h"
 
 int main(int argc, char** argv)
 {
-//    QApplication app(argc, argv);
-//    ChatMainWindow mainWindow;
-//    mainWindow.show();
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
+
+    InteractiveMainWindow interactive;
     QQmlApplicationEngine engine;
-    engine.load("qrc:/Main.qml");
+    engine.rootContext()->setContextProperty("interactive", &interactive);
+
+    const QUrl url(QStringLiteral("qrc:/Main.qml"));
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl)
+            QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
+    engine.load(url);
 
     return app.exec();
 }

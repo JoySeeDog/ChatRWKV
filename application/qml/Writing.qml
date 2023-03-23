@@ -8,9 +8,21 @@ Rectangle {
     width: parent.width
     height: parent.height
 
+    // 定义输出文本和消息列表
+      property string outputText: ""
+      property var messages: [
+           "Hello, how can I help you today?",
+           "Would you like some more information?",
+           "I'm sorry, I don't understand. Can you please clarify?",
+           "Thank you for using ChatGPT!",
+           "我不明白您的意思，请您再解释一下。",
+           "谢谢您使用ChatGPT!"
+       ]
+    property int index: 0
+
     Rectangle {
         width: parent.width / 2 -10
-        height: parent.height - 2
+        height: parent.height - 10
         anchors.top:parent.top
         anchors.topMargin : 8
         border.color: "#E5E7EB"
@@ -363,35 +375,89 @@ The Story:"
                         countPenaltyInput.setValue(value)
                         countPenaltyInput.blockSignal(false)
                         //需要除100
-
                     }
                 }
             }
 
             Row {
-                anchors.top: tokenCountValueSlider.bottom
-                anchors.topMargin: 8
+                id: buttonRow
+                anchors.top: countPenalty.bottom
+                anchors.topMargin: 10
+                spacing: 10
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.right: parent.right
+                anchors.rightMargin: 10
 
                 Button {
                     id: clearButton
-                    text: "清除"
+                    width: (parent.width - 10) /2
+                    height: 40
+                    text: "Clear"
                     background: Rectangle{
-                        color: "#666666"
+                        color: "white"
                         border.width: 1
-                        border.color: "#C4C4C4"
+                        border.color: Qt.rgba(89.0 / 255, 80.0 / 255, 249.0 / 255, 1)
+                    }
+                    contentItem: Text {
+                            text: clearButton.text
+                            font: clearButton.font
+                            color: Qt.rgba(89.0 / 255, 80.0 / 255, 249.0 / 255, 1)
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                   }
+
+                    onClicked: {
+
                     }
 
                 }
                 Button {
                     id: submitButton
-                    text: "提交"
+                    width: (parent.width - 10) /2
+                    height: 40
+                    text: "Submit"
                     background: Rectangle{
-                        color: "#666666"
-                        border.width: 1
-                        border.color: "#C4C4C4"
+                        color: Qt.rgba(89.0 / 255, 80.0 / 255, 249.0 / 255, 1)
+                    }
+                    contentItem: Text {
+                            text: submitButton.text
+                            font: submitButton.font
+                            color: "white"
+                            horizontalAlignment: Text.AlignHCenter
+                            verticalAlignment: Text.AlignVCenter
+                   }
+                    onClicked: {
+                        timer.start()
                     }
                 }
 
+
+            }
+
+            Button {
+                id: stopButton
+                anchors.top: buttonRow.bottom
+                anchors.topMargin: 10
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.right: parent.right
+                anchors.rightMargin: 10
+                height: 40
+                text: "Stop"
+                background: Rectangle{
+                    color: Qt.rgba(253.0 / 255, 197.0 / 255, 197.0 / 255, 1)
+                }
+                contentItem: Text {
+                        text: stopButton.text
+                        font: stopButton.font
+                        color: Qt.rgba(225.0 / 255, 64.0 / 255, 69.0 / 255, 1)
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+               }
+                onClicked: {
+
+                }
             }
 
 
@@ -399,5 +465,66 @@ The Story:"
 
     }
 
+
+    Rectangle {
+        width: parent.width / 2 -10
+        height: parent.height - 10
+        anchors.top:parent.top
+        anchors.topMargin : 8
+        anchors.right: parent.right
+        anchors.rightMargin: 10
+        border.color: "#E5E7EB"
+        border.width: 1
+
+        CustomText {
+            id: outpotLabel
+            text: "Output"
+            height:20
+            color: "#6B7280"
+            anchors.top:parent.top
+            anchors.topMargin : 8
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+        }
+
+        TextArea {
+          id: textArea
+          anchors.top:outpotLabel.bottom
+          anchors.topMargin : 8
+          anchors.left: parent.left
+          anchors.leftMargin: 10
+          anchors.right: parent.right
+          anchors.rightMargin: 10
+          anchors.bottom: parent.bottom
+          anchors.bottomMargin: 10
+          readOnly: true
+          background: Rectangle {
+              border.color: "#E5E7EB"
+              border.width: 1
+          }
+        }
+
+        Timer {
+                id: timer
+                interval: 1000
+                repeat: true
+                onTriggered: {
+                    var words = messages[index].split(' ');
+                    for (var i = 0; i < words.length; i++) {
+                        textArea.cursorPosition = textArea.text.length;
+                        textArea.text += words[i] + " ";
+                    }
+                    textArea.cursorPosition = textArea.text.length;
+                    textArea.text += "\n";
+                    index = (index + 1) % messages.length;
+                    if (index === 0) {
+                        timer.stop();
+                    }
+           }
+         }
+
+    }
 
 }
