@@ -7,7 +7,7 @@
 #include <QObject>
 #include <QSharedPointer>
 
-class TalkData : public QObject
+class ChatData : public QObject
 {
     Q_OBJECT
 public:
@@ -29,18 +29,18 @@ public:
     Q_ENUM(DataStatus)
 };
 
-struct TalkDataBasic
+struct ChatDataBasic
 {
     qint64 id;
     QString user;
     QString sender;
     qint64 datetime;
-    TalkData::DataType type = TalkData::Text;
-    TalkData::DataStatus status = TalkData::DataError;
-    virtual ~TalkDataBasic(){}
+    ChatData::DataType type = ChatData::Text;
+    ChatData::DataStatus status = ChatData::DataError;
+    virtual ~ChatDataBasic(){}
 };
 
-struct TalkDataText : public TalkDataBasic
+struct ChatDataText : public ChatDataBasic
 {
     QString text;
 };

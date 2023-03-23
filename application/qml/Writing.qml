@@ -8,17 +8,29 @@ Rectangle {
     width: parent.width
     height: parent.height
 
-    // 定义输出文本和消息列表
-      property string outputText: ""
-      property var messages: [
-           "Hello, how can I help you today?",
-           "Would you like some more information?",
-           "I'm sorry, I don't understand. Can you please clarify?",
-           "Thank you for using ChatGPT!",
-           "我不明白您的意思，请您再解释一下。",
-           "谢谢您使用ChatGPT!"
-       ]
+    property string outputText: ""
+    property var messages: [ ]
     property int index: 0
+
+    function clear() {
+        textArea.text = ""
+        messages.splice(0, messages.length);
+        if(timer) {
+            timer.start()
+        }
+    }
+
+    Connections {
+        target: interactive
+        function onSigReceivedChatMessage(text) {
+            textArea.text = ""
+            let lines = text.split("\n")
+            for(var item of lines){
+                messages.push(item)
+            }
+            timer.start()
+        }
+    }
 
     Rectangle {
         width: parent.width / 2 -10
@@ -30,7 +42,7 @@ Rectangle {
 
         Column {
             spacing: 4
-            width: parent.width
+            anchors.fill: parent
             CustomText {
                 id: prompt
                 text: "Prompt"
@@ -408,7 +420,7 @@ The Story:"
                    }
 
                     onClicked: {
-
+                        clear()
                     }
 
                 }
@@ -428,7 +440,7 @@ The Story:"
                             verticalAlignment: Text.AlignVCenter
                    }
                     onClicked: {
-                        timer.start()
+                        interactive.sendMessage(multipleLine.text)
                     }
                 }
 
@@ -456,7 +468,8 @@ The Story:"
                         verticalAlignment: Text.AlignVCenter
                }
                 onClicked: {
-
+                     timer.stop()
+                     messages.splice(0, messages.length);
                 }
             }
 
@@ -500,6 +513,7 @@ The Story:"
           anchors.bottom: parent.bottom
           anchors.bottomMargin: 10
           readOnly: true
+          selectByMouse: true
           background: Rectangle {
               border.color: "#E5E7EB"
               border.width: 1
@@ -511,16 +525,17 @@ The Story:"
                 interval: 1000
                 repeat: true
                 onTriggered: {
-                    var words = messages[index].split(' ');
+                    var words = messages[index].split(' ')
                     for (var i = 0; i < words.length; i++) {
-                        textArea.cursorPosition = textArea.text.length;
-                        textArea.text += words[i] + " ";
+                        textArea.cursorPosition = textArea.text.length
+                        textArea.text += words[i] + " "
                     }
-                    textArea.cursorPosition = textArea.text.length;
-                    textArea.text += "\n";
-                    index = (index + 1) % messages.length;
+                    textArea.cursorPosition = textArea.text.length
+                    textArea.text += "\n"
+                    index = (index + 1) % messages.length
                     if (index === 0) {
-                        timer.stop();
+                        timer.stop()
+                        messages.splice(0, messages.length);
                     }
            }
          }

@@ -1,51 +1,57 @@
-import QtQuick.Window 2.12
-import QtQuick.Controls 2.12
+//import QtQuick.Window 2.12
+//import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 1.4 as Ctrl1
 import QtQuick 2.2
-import QtQuick.Controls 2.14
+import QtQuick.Controls 2.4 as Ctrl2
+import QtQuick.Controls 2.0
 import QtQuick.Controls.Styles 1.4
 
+
 import QtMultimedia 5.12
-import TalkModel 1.0
+import ChatModel 1.0
 
 Rectangle {
-    visible: true
-    width: 720
-    height: 820
+    id: rootItem
+    width: parent.width
+    height: parent.height
 
-//    id: rootItem
-//    width: parent.width
-//    height: parent.height
+     function clear() {
+         chatModel.clearModel()
+     }
 
-    TalkListModel{
-        id: talk_model
+    ChatListModel{
+        id: chatModel
         onModelReset: {
-            update_timer.start();
+            updateTimer.start();
         }
         onRowsInserted: {
-            update_timer.start();
+            updateTimer.start();
+        }
+    }
+
+    Connections {
+        target: interactive
+        function onSigReceivedChatMessage(text) {
+             chatModel.appendText("RWKV","Self", text)
         }
     }
 
     Timer{
-        id: update_timer
+        id: updateTimer
         interval: 0
         repeat: false
         onTriggered: {
-            //对应版本Qt5.13.1
-            //positionViewAtEnd有问题，新增的大小受上次最后一项大小的影响
-            //如果上次更短就没法滑倒底部
-            //talk_view.positionViewAtEnd();
-            talk_view.currentIndex=talk_view.count-1;
+            chatView.currentIndex = chatView.count - 1
         }
     }
 
     Ctrl1.SplitView{
+        id: splitView
         anchors.fill: parent
         anchors.margins: 10
         orientation: Qt.Vertical
-        handleDelegate: Rectangle{
+        handleDelegate : Rectangle {
             height: 10
         }
 
@@ -53,109 +59,90 @@ Rectangle {
             Layout.fillHeight: true
             Layout.fillWidth: true
             radius: 4
-            border.color: "gray"
-            color: "#EEEEEE"
-            //消息列表
+            border.color: "#E5E7EB"
+            color: "white"
             ChatList{
-                id: talk_view
+                id: chatView
                 anchors.fill: parent
                 anchors.margins: 10
-                model: talk_model
-                talkModel: talk_model
+                model: chatModel
+                talkModel: chatModel
             }
         }
 
         Rectangle{
-            height: 220
+            id: multipleLine
+            height: 160
             Layout.fillWidth: true
             radius: 4
-            border.color: "gray"
-            Row{
-                x: 10
-                y: 10
-                spacing: 10
-                //数据类型
-                ComboBox{
-                    id: send_type
-                    model: ["text","audio"]
-                    currentIndex: 0
-                }
-                //清空
-                Button{
-                    text: "Clear"
-                    onClicked: {
-                        text_area.clear();
-                        talk_model.clearModel();
-                    }
-                }
+            border.color: "#E5E7EB"
+
+            MultipleLineInput {
+                id: textArea
+                anchors.fill: parent
+                border.width: 1
+                text: "Here's a short cyberpunk sci-fi adventure story. The story's main character is an artificial human created by a company called OpenBot.
+
+The Story:"
             }
 
-            //文本编辑框
-            TextArea{
-                id: text_area
-                text: "龚建波 1992 测试！啊实打实打算"+
-                      "asdasasd啊实打实大苏打啊实打实"+
-                      "啊实打实大苏打按时大苏20210329"
-                anchors {
-                    fill: parent
-                    leftMargin: 10
-                    rightMargin: 10
-                    topMargin: 60
-                    bottomMargin: 60
-                }
+        }
 
-                font{
-                    family: "Microsoft YaHei"
-                    pixelSize: 14
-                }
-                selectByMouse: true
+      }
+    Ctrl2.Button {
+        id: clearButton
+        height: 40
+        width: 80
+        anchors.bottom: splitView.bottom
+        anchors.bottomMargin: 5
+        anchors.left: splitView.left
+        anchors.leftMargin: 50
 
-                wrapMode: TextInput.WrapAnywhere
+        text: "Clear"
+        background: Rectangle{
+            color: "white"
+            border.width: 1
+            border.color: Qt.rgba(89 / 255, 80.0 / 255, 249.0 / 255, 1)
+        }
+        contentItem: Text {
+                text: clearButton.text
+                font: clearButton.font
+                color: Qt.rgba(89.0 / 255, 80.0 / 255, 249.0 / 255, 1)
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+       }
 
+        onClicked: {
+            chatModel.clearModel()
+        }
 
-            }
-            //A发送
-            Button{
-                anchors.left: parent.left
-                anchors.bottom: parent.bottom
-                anchors.margins: 10
-                text: "A Send"
-                onClicked: {
-                    switch(send_type.currentText){
-                    case "text":
-                        if(true){ //M115
-                            if(text_area.text.length<1)
-                                return;
-                            talk_model.appendText("B","A",text_area.text);
-                        }break;
-                    case "audio":
-                        if(true){
-                            talk_model.appendAudio("B","A");
-                        }break;
-                    }
-                }
-            }//end Button
-            //B发送
-            Button{
-                anchors.right: parent.right
-                anchors.bottom: parent.bottom
-                anchors.margins: 10
-                text: "B Send"
-                onClicked: {
-                    switch(send_type.currentText){
-                    case "text":
-                        if(true){ //M115
-                            if(text_area.text.length<1)
-                                return;
-                            talk_model.appendText("B","B",text_area.text);
-                        }break;
-                    case "audio":
-                        if(true){
-                            talk_model.appendAudio("B","B");
-                        }break;
-                    }
-                }
-            }//end Button
+    }
+
+    Ctrl2.Button {
+        id: submitButton
+        height: 40
+        width: 80
+        anchors.bottom: splitView.bottom
+        anchors.bottomMargin: 5
+        anchors.topMargin: 10
+        anchors.right: splitView.right
+        anchors.rightMargin: 50
+        text: "Submit"
+        background: Rectangle{
+            color: Qt.rgba(89.0 / 255, 80.0 / 255, 249.0 / 255, 1)
+        }
+        contentItem: Text {
+                text: submitButton.text
+                font: submitButton.font
+                color: "white"
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+       }
+        onClicked: {
+            if(textArea.text.length < 1)
+                return;
+            chatModel.appendText("self","self",textArea.text);
+            interactive.sendMessage(textArea.text)
         }
     }
 }

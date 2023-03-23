@@ -39,12 +39,6 @@ Rectangle {
 
              TextArea {
                  id: inputTextArea
-                 anchors.fill: parent
-                 rightPadding: JsStyle.ComInput_Normal.paddingRight + borderRect.border.width
-                 topPadding: JsStyle.ComInput_Normal.paddingTop + borderRect.border.width
-                 leftPadding: JsStyle.ComInput_Normal.paddingLeft + borderRect.border.width
-                 bottomPadding: JsStyle.ComInput_Normal.paddingBottom + borderRect.border.width
-
                  wrapMode: TextEdit.Wrap
                  textFormat:TextEdit.AutoText
                  selectByMouse:true

@@ -14,8 +14,8 @@ Item {
     property int leftWidth: 110
     property int rightWidth: 110
     property int contentWidth: Math.max(10,control.width-control.leftWidth-control.rightWidth)
-    property bool isUser: (model.user===model.sender)
-    property color messageBgColor: control.isUser?" #98E892":"#FFFFFF"
+    property bool isUser: (model.user === model.sender)
+    property color messageBgColor: control.isUser? Qt.rgba(205 / 255.0, 202 / 255.0, 253 / 255, 1) : "#E5E7EB"
 
     default property alias contentItems: content_item.children
 

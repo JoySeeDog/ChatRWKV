@@ -2,12 +2,12 @@ import QtQuick 2.12
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.12
 import QtMultimedia 5.12
-import TalkModel 1.0
+import ChatModel 1.0
 
 ListView {
     id: control
 
-    property TalkListModel talkModel
+    property ChatListModel talkModel
 
     clip: true
     headerPositioning: ListView.OverlayHeader

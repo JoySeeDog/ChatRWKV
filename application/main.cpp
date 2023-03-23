@@ -1,14 +1,14 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
-#include "source/InteractiveMainWindow.h"
+#include "source/InteractiveMain.h"
 
 int main(int argc, char** argv)
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    InteractiveMainWindow interactive;
+    InteractiveMain interactive;
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("interactive", &interactive);
 

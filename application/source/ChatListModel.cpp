@@ -2,32 +2,32 @@
 // Created by diwa on 2023/3/21.
 //
 
-#include "TalkListModel.h"
+#include "ChatListModel.h"
 
 #include <QTimer>
 #include <QDateTime>
 #include <QRandomGenerator>
 
-TalkListModel::TalkListModel(QObject *parent)
+ChatListModel::ChatListModel(QObject *parent)
     : QAbstractListModel(parent)
 {
 }
 
-int TalkListModel::rowCount(const QModelIndex &parent) const
+int ChatListModel::rowCount(const QModelIndex &parent) const
 {
     if (parent.isValid())
         return 0;
 
-    return talkList.count();
+    return chatList.count();
 }
 
-QVariant TalkListModel::data(const QModelIndex &index, int role) const
+QVariant ChatListModel::data(const QModelIndex &index, int role) const
 {
     if (!index.isValid())
         return QVariant();
 
-    const int row=index.row();
-    auto item=talkList.at(row);
+    const int row = index.row();
+    auto item = chatList.at(row);
     switch(role)
     {
     default:break;
@@ -43,9 +43,9 @@ QVariant TalkListModel::data(const QModelIndex &index, int role) const
         return item->type;
     case Qt::UserRole+5:
         return item->status;
-    case Qt::UserRole+100:
+    case Qt::UserRole + 100:
     {
-        TalkDataText *talk_data=static_cast<TalkDataText*>(item.get());
+        ChatDataText *talk_data = static_cast<ChatDataText*>(item.get());
         return talk_data->text;
     }
     }
@@ -53,7 +53,7 @@ QVariant TalkListModel::data(const QModelIndex &index, int role) const
     return QVariant();
 }
 
-QHash<int, QByteArray> TalkListModel::roleNames() const
+QHash<int, QByteArray> ChatListModel::roleNames() const
 {
     return QHash<int,QByteArray>{
         { Qt::UserRole+0, "id" }
@@ -67,32 +67,32 @@ QHash<int, QByteArray> TalkListModel::roleNames() const
     };
 }
 
-void TalkListModel::clearModel()
+void ChatListModel::clearModel()
 {
     beginResetModel();
-    talkList.clear();
+    chatList.clear();
     endResetModel();
 }
 
-void TalkListModel::appendText(const QString &user,
+void ChatListModel::appendText(const QString &user,
                                const QString &sender,
                                const QString &text)
 {
-    TalkDataText *talk_data=new TalkDataText;
-    talk_data->id=0;
-    talk_data->user=user;
-    talk_data->sender=sender;
-    talk_data->datetime=QDateTime::currentDateTime().toMSecsSinceEpoch();
-    talk_data->type=TalkData::Text;
-    talk_data->text=text;
+    ChatDataText *chatData=new ChatDataText;
+    chatData->id = 0;
+    chatData->user = user;
+    chatData->sender = sender;
+    chatData->datetime = QDateTime::currentDateTime().toMSecsSinceEpoch();
+    chatData->type = ChatData::Text;
+    chatData->text = text;
 
-    beginInsertRows(QModelIndex(),talkList.count(),talkList.count());
-    talkList.push_back(QSharedPointer<TalkDataBasic>(talk_data));
+    beginInsertRows(QModelIndex(),chatList.count(),chatList.count());
+    chatList.push_back(QSharedPointer<ChatDataBasic>(chatData));
     endInsertRows();
 }
 
 
-bool TalkListModel::isVaidRow(int row) const
+bool ChatListModel::isVaidRow(int row) const
 {
-    return (row>=0&&row<talkList.count());
+    return (row >=0 &&row < chatList.count());
 }

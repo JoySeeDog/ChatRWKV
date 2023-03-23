@@ -18,6 +18,7 @@ Window {
     height: 720
     visible: true
     title: qsTr("ChatRWKV")
+    id: mainWindow
 
     Rectangle {
         id:leftTab
@@ -25,15 +26,26 @@ Window {
         anchors.bottom: parent.bottom
         color: "#5E5FF6"
 
-        NewChatButton {
-            id: chatButton
+        Column {
             anchors.top: parent.top
             anchors.topMargin: 10
             anchors.horizontalCenter: parent.horizontalCenter
-            onSigClickButton: {
-                console.log("Clicked button")
-                interactive.mySlot("Hello from QML")
-                interactive.clearModel()
+            spacing: 30
+
+            NewChatButton {
+                id: chatButton
+                onSigClickButton: {
+                    console.log("Clicked chatButton")
+                    interactiveWindow.switchMode(0)
+                }
+            }
+            NewChatButton {
+                id: writtingButton
+                text: "+   New writting"
+                onSigClickButton: {
+                    console.log("Clicked writtingButton")
+                    interactiveWindow.switchMode(1)
+                }
             }
         }
 
@@ -44,6 +56,7 @@ Window {
     }
 
     InteractiveWindow {
+        id:interactiveWindow
         anchors.top: parent.top
         anchors.topMargin: 10
         anchors.bottom: parent.bottom

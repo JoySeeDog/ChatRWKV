@@ -5,13 +5,13 @@
 #pragma once
 
 #include <QAbstractListModel>
-#include "TalkListDefine.h"
+#include "ChatListDefine.h"
 
-class TalkListModel : public QAbstractListModel
+class ChatListModel : public QAbstractListModel
 {
     Q_OBJECT
 public:
-    explicit TalkListModel(QObject *parent = nullptr);
+    explicit ChatListModel(QObject *parent = nullptr);
 
     //data
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -28,6 +28,6 @@ private:
     bool isVaidRow(int row) const;
 
 private:
-    QList<QSharedPointer<TalkDataBasic>> talkList;
+    QList<QSharedPointer<ChatDataBasic>> chatList;
 };
 

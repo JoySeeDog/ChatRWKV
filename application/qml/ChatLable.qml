@@ -8,7 +8,6 @@ TextEdit {
 
     padding: 14
     font{
-        family: "Microsoft YaHei"
         pixelSize: 14
     }
     color: "#666666"
