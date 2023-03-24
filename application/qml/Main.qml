@@ -50,8 +50,8 @@ Window {
         }
 
         Component.onCompleted: {
-              leftTab.width = chatButton.width + 20;
-          }
+            leftTab.width = chatButton.width + 20;
+        }
 
     }
 
@@ -67,46 +67,46 @@ Window {
         anchors.rightMargin: 10
     }
 
-//    TabBar {
-//        id: bar
-//        anchors.top: chatButton.bottom
-//        width: parent.width
-//        TabButton {
-//            text: qsTr("Home")
-//        }
-//        TabButton {
-//            text: qsTr("Discover")
-//        }
-//        TabButton {
-//            text: qsTr("Activity")
-//        }
-//    }
+    //    TabBar {
+    //        id: bar
+    //        anchors.top: chatButton.bottom
+    //        width: parent.width
+    //        TabButton {
+    //            text: qsTr("Home")
+    //        }
+    //        TabButton {
+    //            text: qsTr("Discover")
+    //        }
+    //        TabButton {
+    //            text: qsTr("Activity")
+    //        }
+    //    }
 
-//    StackLayout {
-//        width: parent.width
-//        currentIndex: bar.currentIndex
-//        Item {
-//            id: homeTab
-//            Rectangle {
-//                color: "red"
-//                anchors.fill: parent
-//            }
-//        }
-//        Item {
-//            id: discoverTab
-//            Rectangle {
-//                color: "blue"
-//                anchors.fill: parent
-//            }
-//        }
-//        Item {
-//            id: activityTab
-//            Rectangle {
-//                color: "green"
-//                anchors.fill: parent
-//            }
-//        }
-//    }
+    //    StackLayout {
+    //        width: parent.width
+    //        currentIndex: bar.currentIndex
+    //        Item {
+    //            id: homeTab
+    //            Rectangle {
+    //                color: "red"
+    //                anchors.fill: parent
+    //            }
+    //        }
+    //        Item {
+    //            id: discoverTab
+    //            Rectangle {
+    //                color: "blue"
+    //                anchors.fill: parent
+    //            }
+    //        }
+    //        Item {
+    //            id: activityTab
+    //            Rectangle {
+    //                color: "green"
+    //                anchors.fill: parent
+    //            }
+    //        }
+    //    }
 }
 
 

@@ -16,9 +16,9 @@ Rectangle {
     width: parent.width
     height: parent.height
 
-     function clear() {
-         chatModel.clearModel()
-     }
+    function clear() {
+        chatModel.clearModel()
+    }
 
     ChatListModel{
         id: chatModel
@@ -33,7 +33,7 @@ Rectangle {
     Connections {
         target: interactive
         function onSigReceivedChatMessage(text) {
-             chatModel.appendText("RWKV","Self", text)
+            chatModel.appendText("RWKV","Self", text)
         }
     }
 
@@ -88,7 +88,7 @@ The Story:"
 
         }
 
-      }
+    }
     Ctrl2.Button {
         id: clearButton
         height: 40
@@ -105,12 +105,12 @@ The Story:"
             border.color: Qt.rgba(89 / 255, 80.0 / 255, 249.0 / 255, 1)
         }
         contentItem: Text {
-                text: clearButton.text
-                font: clearButton.font
-                color: Qt.rgba(89.0 / 255, 80.0 / 255, 249.0 / 255, 1)
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-       }
+            text: clearButton.text
+            font: clearButton.font
+            color: Qt.rgba(89.0 / 255, 80.0 / 255, 249.0 / 255, 1)
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
 
         onClicked: {
             chatModel.clearModel()
@@ -132,12 +132,12 @@ The Story:"
             color: Qt.rgba(89.0 / 255, 80.0 / 255, 249.0 / 255, 1)
         }
         contentItem: Text {
-                text: submitButton.text
-                font: submitButton.font
-                color: "white"
-                horizontalAlignment: Text.AlignHCenter
-                verticalAlignment: Text.AlignVCenter
-       }
+            text: submitButton.text
+            font: submitButton.font
+            color: "white"
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
         onClicked: {
             if(textArea.text.length < 1)
                 return;

@@ -37,31 +37,31 @@ Rectangle {
             id: scroll
             anchors.fill: borderRect
 
-             TextArea {
-                 id: inputTextArea
-                 wrapMode: TextEdit.Wrap
-                 textFormat:TextEdit.AutoText
-                 selectByMouse:true
-                 selectByKeyboard: true
-                 font.family: "PingFang SC"
-                 font.pixelSize: fontSize
-                 selectionColor: style["selectionColor"]
-                 selectedTextColor: style["selectedTextColor"]
-                 clip: true
-                 color: disable? style["textDisableColor"] : style["textColor"]
-                 horizontalAlignment: Text.AlignLeft
-                 verticalAlignment: Text.AlignTop
-                 cursorVisible: inputTextArea.focus
+            TextArea {
+                id: inputTextArea
+                wrapMode: TextEdit.Wrap
+                textFormat:TextEdit.AutoText
+                selectByMouse:true
+                selectByKeyboard: true
+                font.family: "PingFang SC"
+                font.pixelSize: fontSize
+                selectionColor: style["selectionColor"]
+                selectedTextColor: style["selectedTextColor"]
+                clip: true
+                color: disable? style["textDisableColor"] : style["textColor"]
+                horizontalAlignment: Text.AlignLeft
+                verticalAlignment: Text.AlignTop
+                cursorVisible: inputTextArea.focus
 
 
-                 onEditingFinished: {
-                       sigValueChanged(inputTextArea.text)
-                 }
-                 cursorDelegate:CursorDelegate {
-                     delegate: inputTextArea
-                 }
+                onEditingFinished: {
+                    sigValueChanged(inputTextArea.text)
+                }
+                cursorDelegate:CursorDelegate {
+                    delegate: inputTextArea
+                }
             }
-         }
+        }
     }
 
     CustomText {
@@ -102,7 +102,7 @@ Rectangle {
                 return style["focusBorderColor"]
             }
         }
-         return style["hoverBorderColor"]
+        return style["hoverBorderColor"]
     }
 
     MouseArea {
@@ -120,16 +120,16 @@ Rectangle {
         }
     }
 
-//    Connections{
-//        target: uiinteractor
-//        function onSigMouseClicked(x, y){
-//            let pos = root.mapFromGlobal(x, y)
-//            if(pos.x < 0 || pos.x > root.width || pos.y < 0 || pos.y > root.height){
-//                root.hovered = false
-//                inputTextArea.focus = false
-//            }
-//        }
-//    }
+    //    Connections{
+    //        target: uiinteractor
+    //        function onSigMouseClicked(x, y){
+    //            let pos = root.mapFromGlobal(x, y)
+    //            if(pos.x < 0 || pos.x > root.width || pos.y < 0 || pos.y > root.height){
+    //                root.hovered = false
+    //                inputTextArea.focus = false
+    //            }
+    //        }
+    //    }
 }
 
 

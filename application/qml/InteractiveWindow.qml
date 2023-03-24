@@ -16,9 +16,9 @@ Rectangle{
 
     function switchMode (index) {
         var item = paramAreaLoader.item
-         if (item) {
-             item.clear()
-          }
+        if (item) {
+            item.clear()
+        }
         if(index === 0) {
             paramAreaLoader.sourceComponent = chatComponent
         } else {

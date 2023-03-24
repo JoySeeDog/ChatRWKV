@@ -315,17 +315,6 @@ Rectangle {
             blockFlag--
         }
     }
-
-//    Connections{
-//        target: uiinteractor
-//        function onSigMouseClicked(x, y){
-//            let pos = root.mapFromGlobal(x, y)
-//            if(pos.x < 0 || pos.x > root.width || pos.y < 0 || pos.y > root.height){
-//                root.hovered = false
-//                textInput.focus = false
-//            }
-//        }
-//    }
 }
 
 
