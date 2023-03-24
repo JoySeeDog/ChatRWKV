@@ -4,6 +4,8 @@
 
 #pragma once
 #include <QObject>
+#include "ChatNetworkRequest.h"
+
 class InteractiveMain : public QObject
 {
     Q_OBJECT
@@ -27,5 +29,7 @@ private:
      int m_topP = 80;
      int m_presencePenalty = 10;
      int m_countPenalty = 10;
+     std::shared_ptr<ChatNetworkRequest> m_networkRequest;
+     bool m_requestFinished = true;
 
 };
